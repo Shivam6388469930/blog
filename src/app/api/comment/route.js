@@ -22,18 +22,12 @@ export async function POST(req) {
       return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
     }
 
-    // Check if the user has already commented on this product
-    // const existingComment = await Comment.findOne({ product_id, email });
-    // if (existingComment) {
-    //   return NextResponse.json({ message: "You have already commented on this product." }, { status: 400 });
-    // }
-
     // Create and save the new comment
     const newComment = await Comment.create({
       product_id,
       text: text.trim(),
-      name,
-      email,
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
     });
 
     return NextResponse.json({ message: "Comment added", comment: newComment }, { status: 201 });
@@ -67,3 +61,5 @@ export async function GET(req) {
     return NextResponse.json({ message: "Failed to fetch comments", error: err.message }, { status: 500 });
   }
 }
+
+

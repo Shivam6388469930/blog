@@ -17,10 +17,19 @@ export async function GET(req) {
 
     await connectDB();
 
+    // Validate MongoDB ObjectId format
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return NextResponse.json(
+        { message: "❌ Invalid ID format" },
+        { status: 400 }
+      );
+    }
+
     // ID से Article खोजें
-    const article = await Article.findById(id);
+    const article = await Article.findById(id).lean();
 
     if (!article) {
+      console.log(`❌ Article not found for ID: ${id}`);
       return NextResponse.json(
         { message: "❌ Article not found" },
         { status: 404 }

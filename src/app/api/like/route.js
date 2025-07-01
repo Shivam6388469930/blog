@@ -42,52 +42,6 @@ export async function GET(req) {
   }
 }
 
-// POST method to store a like or dislike
-// export async function POST(req) {
-//   await connectDB();
-//   const body = await req.json();
-
-//   const { productId, reaction, userid } = body;
-
-//   if (!productId || !userid || !["like", "dislike"].includes(reaction)) {
-//     return new Response(
-//       JSON.stringify({ success: false, message: "Invalid input" }),
-//       { status: 400 }
-//     );
-//   }
-
-//   try {
-//     const existing = await Like.findOne({ productId, userid });
-
-//     if (existing) {
-//       return new Response(
-//         JSON.stringify({ success: false, message: "You already reacted." }),
-//         { status: 400 }
-//       );
-//     }
-
-//     const newReaction = new Like({
-//       productId,
-//       userid,
-//       reaction, // Save the reaction as 'like' or 'dislike'
-//     });
-
-//     await newReaction.save();
-
-//     return new Response(
-//       JSON.stringify({ success: true, data: newReaction }),
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     return new Response(
-     
-//       JSON.stringify({ success: false, message: "Server error", error: error.message }),
-//       console.error("Error in POST /api/like:", error.message),
-
-//       { status: 500 }
-//     );
-//   }
-// }
 
 export async function POST(req) {
   await connectDB();
