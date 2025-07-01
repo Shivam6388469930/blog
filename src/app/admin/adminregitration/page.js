@@ -53,7 +53,12 @@ export default function RegisterPage() {
         setImage(null);
         setPreview(null);
         localStorage.setItem("Image", data.image);
-        window.location.href = "/admin/adminlogin";
+        // Success: Redirect to login after short delay
+        setMessage("Registration successful! Redirecting to login...");
+        setTimeout(() => {
+          window.location.href = "/admin/adminlogin";
+        }, 1500); // 1.5 second delay for user feedback
+        return;
       }
     } catch (err) {
       setMessage("Registration failed. Please try again.");

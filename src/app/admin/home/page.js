@@ -14,12 +14,12 @@ export default function AdminHomePage() {
 
   useEffect(() => {
     const checkAuth = () => {
-      const token = localStorage.getItem("admintoken");
+      const token = localStorage.getItem("adminToken");
       if (!token) {
         router.push("/admin/adminlogin");
         return false;
       }
-      const name = localStorage.getItem("userName");
+      const name = localStorage.getItem("adminUserName");
       setUserName(name || "Admin");
       return true;
     };

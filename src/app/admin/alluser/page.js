@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 
 export default function Page() {
+    if(!localStorage.getItem('adminToken')){
+     window.location.href = "/admin/adminlogin";
+  }
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {

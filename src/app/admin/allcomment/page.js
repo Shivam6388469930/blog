@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 
 export default function Page() {
+    if(!localStorage.getItem('adminToken')){
+     window.location.href = "/admin/adminlogin";
+  }
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);

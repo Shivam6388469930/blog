@@ -1,33 +1,55 @@
+// 
+
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: 'tam',
-    email: 'ram',
-    gender: 'Male/Female',
-    mobile: '5252513516',
-    address: 'xyz',
+    fullName: "",
+    email: "",
+    gender: "",
+    mobile: "",
+    address: "",
   });
-
+ 
   useEffect(() => {
-    const storedName = localStorage.getItem('userName') || 'xyz';
-    const storedEmail = localStorage.getItem('userEmail') || 'xyz@gmail.com';
-    setFormData(prev => ({
-      ...prev,
+     const img = localStorage.getItem("Image");
+    const storedName = localStorage.getItem("userName") || "Guest User";
+    const storedEmail = localStorage.getItem("userEmail") || "guest@example.com";
+    setUserImage(img && (img.startsWith("http") || img.startsWith("/")) ? img : "/avter.png");
+    
+    const storedGender = localStorage.getItem("userGender") || "";
+    const storedMobile = localStorage.getItem("userMobile") || "";
+    const storedAddress = localStorage.getItem("userAddress") || "";
+
+    setFormData({
       fullName: storedName,
       email: storedEmail,
-    }));
+      gender: storedGender,
+      mobile: storedMobile,
+      address: storedAddress,
+    });
   }, []);
+   const [userImage, setUserImage] = useState("/avter.png");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'fullName' || name === 'email') return;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === "fullName" || name === "email") return;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditToggle = () => {
+    if (isEditing) {
+      // Save to localStorage (only the editable fields)
+      localStorage.setItem("userGender", formData.gender);
+      localStorage.setItem("userMobile", formData.mobile);
+      localStorage.setItem("userAddress", formData.address);
+    }
+    setIsEditing(!isEditing);
   };
 
   return (
@@ -50,7 +72,7 @@ export default function Page() {
         <div className="w-full lg:w-1/3 bg-white border border-gray-300 shadow-2xl rounded-xl p-6 flex flex-col items-center gap-4">
           <div className="w-32 h-32 md:w-40 md:h-40 border-2 border-black rounded-full overflow-hidden">
             <Image
-              src="/avter.png"
+              src={userImage}
               alt="Avatar"
               width={160}
               height={160}
@@ -59,14 +81,14 @@ export default function Page() {
           </div>
           <h1 className="text-xl font-semibold">{formData.fullName}</h1>
           <p className="text-md text-gray-600">{formData.email}</p>
-          <div className="flex gap-3 mt-2">
+          {/* <div className="flex gap-3 mt-2">
             <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm md:text-lg font-light px-5 py-2 rounded-lg transition duration-300 ease-in-out">
               Follow
             </button>
             <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm md:text-lg font-light px-5 py-2 rounded-lg transition duration-300 ease-in-out">
               Message
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Details Card */}
@@ -76,11 +98,14 @@ export default function Page() {
             ["Email", "email"],
             ["Gender", "gender"],
             ["Mobile No.", "mobile"],
-            ["Address", "address"]
+            ["Address", "address"],
           ].map(([label, key], index) => {
-            const isReadOnly = key === 'fullName' || key === 'email';
+            const isReadOnly = key === "fullName" || key === "email";
             return (
-              <div key={index} className="flex flex-col md:flex-row gap-2 md:gap-8 mb-4 items-start md:items-center">
+              <div
+                key={index}
+                className="flex flex-col md:flex-row gap-2 md:gap-8 mb-4 items-start md:items-center"
+              >
                 <label className="w-32 md:w-40 font-medium">{label}</label>
                 <input
                   type="text"
@@ -89,7 +114,9 @@ export default function Page() {
                   onChange={handleChange}
                   disabled={!isEditing || isReadOnly}
                   className={`border border-gray-300 rounded-md px-3 py-2 text-base w-full md:w-3/4 bg-transparent ${
-                    isEditing && !isReadOnly ? 'bg-white' : 'bg-gray-100 cursor-not-allowed'
+                    isEditing && !isReadOnly
+                      ? "bg-white"
+                      : "bg-gray-100 cursor-not-allowed"
                   }`}
                 />
               </div>
@@ -98,10 +125,10 @@ export default function Page() {
 
           <div className="text-right mt-4">
             <button
-              onClick={() => setIsEditing(!isEditing)}
+              onClick={handleEditToggle}
               className="bg-blue-500 hover:bg-blue-700 text-white text-sm md:text-lg font-light px-6 py-2 rounded-lg transition duration-300 ease-in-out"
             >
-              {isEditing ? 'Save' : 'Edit'}
+              {isEditing ? "Save" : "Edit"}
             </button>
           </div>
         </div>
@@ -109,3 +136,4 @@ export default function Page() {
     </div>
   );
 }
+

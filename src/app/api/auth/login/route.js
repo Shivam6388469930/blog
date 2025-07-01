@@ -58,6 +58,7 @@ export async function POST(req) {
         userName: user.userName,
         email: user.email,
         image: user.image,
+        role: "user", // Add role to distinguish from admin
       },
       token, // optional: for use in client-side auth if needed
     });

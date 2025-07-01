@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 
 export default function AllArticlesPage() {
+  if(!localStorage.getItem('adminToken')){
+     window.location.href = "/admin/adminlogin";
+  }
   const [articles, setArticles] = useState([]);
 
   const fetchArticles = async () => {

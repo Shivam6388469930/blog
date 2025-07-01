@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 // import { useRouter } from 'next/router';
 
 export default function LoginPage() {
+    if(!localStorage.getItem('adminToken')){
+     window.location.href = "/admin/adminlogin";
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -33,10 +36,25 @@ export default function LoginPage() {
 
       if (res.ok) {
         const { user, token } = data;
-        localStorage.setItem("userName", user.userName);
-        localStorage.setItem("userEmail", user.email);
-        localStorage.setItem("Image", user.image);
-        localStorage.setItem("admintoken", token);
+        // Clear any existing user session
+        // localStorage.removeItem("userName");
+        // localStorage.removeItem("userEmail");
+        // localStorage.removeItem("Image");
+        // localStorage.removeItem("token");
+        // localStorage.removeItem("userRole");
+        // Also clear any old admin session keys (for consistency)
+        // localStorage.removeItem("adminUserName");
+        // localStorage.removeItem("adminUserEmail");
+        // localStorage.removeItem("adminImage");
+        // localStorage.removeItem("adminToken");
+        // localStorage.removeItem("adminRole");
+
+        // Set admin session with separate keys
+        localStorage.setItem("adminUserName", user.userName);
+        localStorage.setItem("adminUserEmail", user.email);
+        localStorage.setItem("adminImage", user.image);
+        localStorage.setItem("adminToken", token);
+        localStorage.setItem("adminRole", user.role || "admin");
 
         setEmail("");
         setPassword("");

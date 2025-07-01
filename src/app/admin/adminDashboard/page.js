@@ -15,7 +15,7 @@ export default function Page() {
 
   useEffect(() => {
     const fetchArticles = async () => {
-      const userEmail = localStorage.getItem("userEmail");
+      const userEmail = localStorage.getItem("adminUserEmail");
       if (!userEmail) return;
 
       try {

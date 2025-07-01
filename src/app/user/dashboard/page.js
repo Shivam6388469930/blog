@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 
 export default function Page() {
+  
   const [articles, setArticles] = useState([]);
-  const [views, setViews] = useState(1500); // Placeholder for views
-  const [comments, setComments] = useState(12); // Placeholder for comments
+  // const [views, setViews] = useState(1500); // Placeholder for views
+  // const [comments, setComments] = useState(12); // Placeholder for comments
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -26,8 +27,8 @@ export default function Page() {
           const data = await res.json();
           if (res.ok) {
             setArticles(data.articles || []);
-            setViews(data.totalViews || 1500);  // Fetch total views from the API
-            setComments(data.totalComments || 12);  // Fetch total comments from the API
+            // setViews(data.totalViews || 1500);  // Fetch total views from the API
+            // setComments(data.totalComments || 12);  // Fetch total comments from the API
             setError(null);
           } else {
             setError(`Failed to fetch articles: ${data.message || "Unknown error"}`);
@@ -117,8 +118,8 @@ export default function Page() {
 
   const cards = [
     { name: "Total Articles", number: articles.length, growth: "+6 From Last Month" },
-    { name: "Total Comments", number: comments, growth: "+4 From Last Month" },
-    { name: "Total Views", number: views, growth: "+200 From Last Month" },
+    // { name: "Total Comments", number: comments, growth: "+4 From Last Month" },
+    // { name: "Total Views", number: views, growth: "+200 From Last Month" },
   ];
 
   return (
