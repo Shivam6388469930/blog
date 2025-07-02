@@ -2,12 +2,10 @@
 import { useEffect, useState } from 'react';
 
 export default function Page() {
-    if(!localStorage.getItem('adminToken')){
-     window.location.href = "/admin/adminlogin";
-  }
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [checkedAuth, setCheckedAuth] = useState(false);
 
   const formatDate = (date) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -56,9 +54,18 @@ export default function Page() {
   };
 
   useEffect(() => {
-    fetchComments();
+    // Only check localStorage on client
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem('adminToken')) {
+        window.location.href = "/admin/adminlogin";
+        return;
+      }
+      setCheckedAuth(true);
+      fetchComments();
+    }
   }, []);
 
+  if (!checkedAuth) return null;
   return (
     <>
       {/* Hero Section */}

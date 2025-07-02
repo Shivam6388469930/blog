@@ -3,21 +3,32 @@ import { useEffect, useState } from "react";
 // import { useRouter } from 'next/router';
 
 export default function LoginPage() {
-    if(!localStorage.getItem('adminToken')){
-     window.location.href = "/admin/adminlogin";
-  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkedAuth, setCheckedAuth] = useState(false);
 
   useEffect(() => {
-    const timer = message && setTimeout(() => setMessage(""), 4000);
+    // Only check localStorage on client
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem('adminToken')) {
+        window.location.href = "/admin/adminlogin";
+        return;
+      }
+      setCheckedAuth(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = message && setTimeout(() => setMessage("") , 4000);
     return () => clearTimeout(timer);
   }, [message]);
 
   useEffect(() => {
-    document.querySelector("input[type='email']")?.focus();
+    if (typeof window !== "undefined") {
+      document.querySelector("input[type='email']")?.focus();
+    }
   }, []);
 
   async function handleLogin(e) {
@@ -67,6 +78,7 @@ export default function LoginPage() {
     }
   }
 
+  if (!checkedAuth) return null;
   return (
     <div className="flex justify-center items-center h-[80vh]">
       <div className="w-full max-w-md bg-white border border-gray-300 shadow-2xl rounded-xl p-6">

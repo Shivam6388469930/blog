@@ -2,10 +2,8 @@
 import { useEffect, useState } from 'react';
 
 export default function Page() {
-    if(!localStorage.getItem('adminToken')){
-     window.location.href = "/admin/adminlogin";
-  }
   const [users, setUsers] = useState([]);
+  const [checkedAuth, setCheckedAuth] = useState(false);
 
   const fetchUsers = async () => {
     try {
@@ -45,7 +43,14 @@ export default function Page() {
   };
 
   useEffect(() => {
-    fetchUsers();
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem('adminToken')) {
+        window.location.href = "/admin/adminlogin";
+        return;
+      }
+      setCheckedAuth(true);
+      fetchUsers();
+    }
   }, []);
 
   const formatDate = (isoString) => {
@@ -53,6 +58,7 @@ export default function Page() {
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
   };
 
+  if (!checkedAuth) return null;
   return (
     <>
       {/* Hero Section */}

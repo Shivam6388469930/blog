@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Image } from "next/image";
 import { Users, FileText, MessageSquare } from "lucide-react";
 
 export default function AdminHomePage() {
@@ -96,7 +97,7 @@ export default function AdminHomePage() {
             <h2 className="text-3xl font-bold mb-2">Admin Dashboard</h2>
             <p className="text-sm">Monitor your platform, manage content, and stay in control.</p>
           </div>
-          <img
+          <Image
             src="/bblog.webp" // Provide your own image in public folder
             alt="Dashboard Illustration"
             className="w-40 mt-4 md:mt-0 md:w-56"
