@@ -53,7 +53,7 @@ export default function RegisterPage() {
         setImage(null);
         setPreview(null);
         localStorage.setItem("Image", data.image);
-        window.location.href = "user/login";
+        window.location.href = "/login";
       }
     } catch (err) {
       setMessage("Registration failed. Please try again.");
