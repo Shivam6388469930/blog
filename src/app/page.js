@@ -519,29 +519,33 @@ const Page = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.05 }}
-              className="bg-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform"
+              className="bg-white p-6 rounded-2xl shadow-lg hover:scale-105 transition-transform flex flex-col justify-between h-full"
             >
-              <div className="relative w-full h-40">
-                <Image
-                  src={card.image || "https://via.placeholder.com/300x200"}
-                  alt={card.title}
-                  fill
-                  className="object-cover rounded-lg"
-                />
+              <div>
+                <div className="relative w-full h-40">
+                  <Image
+                    src={card.image || "https://via.placeholder.com/300x200"}
+                    alt={card.title}
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+                <h2 className="text-lg font-semibold text-gray-900 mt-4">{card.title}</h2>
+                <p className="text-sm text-gray-500 italic">{card.category || "Uncategorized"}</p>
+                <p className="text-gray-600 mt-2">
+                  {card.description.length > 100
+                    ? card.description.slice(0, 100) + "..."
+                    : card.description}
+                </p>
               </div>
-              <h2 className="text-lg font-semibold text-gray-900 mt-4">{card.title}</h2>
-              <p className="text-sm text-gray-500 italic">{card.category || "Uncategorized"}</p>
-              <p className="text-gray-600 mt-2">
-                {card.description.length > 100
-                  ? card.description.slice(0, 100) + "..."
-                  : card.description}
-              </p>
-              <button
-                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                onClick={() => handleRead(card)}
-              >
-                Read More
-              </button>
+              <div className="flex items-center gap-2 mt-4 justify-end mt-auto">
+                <button
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  onClick={() => handleRead(card)}
+                >
+                  Read More
+                </button>
+              </div>
             </motion.article>
           ))}
         </section>

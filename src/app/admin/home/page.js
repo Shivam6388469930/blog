@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Image } from "next/image";
+import Image from "next/image";
 import { Users, FileText, MessageSquare } from "lucide-react";
 
-export default function AdminHomePage() {
+export default function Page() {
   const [userName, setUserName] = useState("");
   const [userCount, setUserCount] = useState(0);
   const [articleCount, setArticleCount] = useState(0);
@@ -98,8 +98,10 @@ export default function AdminHomePage() {
             <p className="text-sm">Monitor your platform, manage content, and stay in control.</p>
           </div>
           <Image
-            src="/bblog.webp" // Provide your own image in public folder
+            src="/bblog.webp"
             alt="Dashboard Illustration"
+            width={224}
+            height={160}
             className="w-40 mt-4 md:mt-0 md:w-56"
           />
         </div>
